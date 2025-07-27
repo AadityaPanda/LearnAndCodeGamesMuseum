@@ -19,18 +19,19 @@
     <main>
         <!-- Section 1: The Playable Game -->
         <section class="game-section">
-            <h2>Play the Game</h2>
+            <h2>🎮 Play the Game</h2>
             <div id="game-container">
-                <p>Guess a number between 1 and 100</p>
-                <button id="startGameBtn">Start Game</button>
-                <!-- This div will show feedback like "You won!" or "Game started!" -->
-                <div id="gameFeedback" style="margin-top: 15px; color: #555; font-weight: bold;"></div>
+                <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+                <button id="startGameBtn" style="padding: 12px 24px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px 0;">Start Game</button>
+                <!-- This div will show the complete game interface and feedback -->
+                <div id="gameFeedback" style="margin-top: 20px; min-height: 100px; border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; background-color: #f8f9fa;"></div>
             </div>
         </section>
 
         <!-- Section 2: The Code and Explanations -->
         <section class="code-section">
-            <h2>Learn the Code</h2>
+            <h2>💻 Learn the Code</h2>
+            <p style="margin-bottom: 20px; color: #666;">See how this game was built with dynamic proximity messages and smart user interface design.</p>
             <div class="code-container">
                 <!-- Tabs to switch languages -->
                 <div class="code-tabs">
@@ -51,10 +52,8 @@
     </main>
 
     <!--
-      KEY CHANGE:
-      All the page logic (tabs, buttons, game logic) has been moved out of this file.
-      We now load one single file that handles everything. The 'defer' attribute
-      ensures the script runs after the HTML is ready.
+      All the page logic (tabs, buttons, game logic) is handled by script.js.
+      The 'defer' attribute ensures the script runs after the HTML is ready.
     -->
     <script src="js/script.js" defer></script>
     
