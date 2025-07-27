@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Changed Title for consistency with the new branding -->
+    <title>Number Guessing Game | CodePlayground</title>
+    <!-- Prism.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    
+    <!-- CHANGE #2: Fixed path to go UP ONE LEVEL to the root folder -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- CHANGE #1: Added breadcrumb navigation back to the main gallery -->
+    <nav class="breadcrumb">
+        <a href="../index.html">← Back to Games</a>
+    </nav>
+
+    <header>
+        <h1>Number Guessing Game</h1>
+        <p>Play the game, then see how it was built in different languages.</p>
+    </header>
+
+    <main>
+        <!-- The content of your game sections remains exactly the same -->
+        <section class="game-section">
+            <h2>🎮 Play the Game</h2>
+            <div id="game-container">
+                <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+                <button id="startGameBtn" style="padding: 12px 24px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px 0;">Start Game</button>
+                <div id="gameFeedback" style="margin-top: 20px; min-height: 100px; border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; background-color: #f8f9fa;"></div>
+            </div>
+        </section>
+
+        <section class="code-section">
+            <h2>💻 Learn the Code</h2>
+            <p style="margin-bottom: 20px; color: #666;">See how this game was built with dynamic proximity messages and smart user interface design.</p>
+            <div class="code-container">
+                <div class="code-tabs">
+                    <button class="tab-button active" data-lang="js">JavaScript</button>
+                    <button class="tab-button" data-lang="py">Python</button>
+                </div>
+                <div class="code-view">
+                    <pre id="code-js" class="code-block active"><code class="language-javascript">// Loading JavaScript code...</code></pre>
+                    <pre id="code-py" class="code-block"><code class="language-python"># Loading Python code...</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- CHANGE #3: Fixed path to be local to this folder -->
+    <script src="script.js" defer></script>
+    
+    <!-- Prism.js Core JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+</body>
+</html>

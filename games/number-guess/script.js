@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('startGameBtn').addEventListener('click', startGame);
 
     // --- NEW: Load the code files for display ---
-    // Make sure your folder structure is: games/number-guess/guess-the-number.js
-    loadCodeForDisplay('js', 'games/number-guess/guess-the-number.js');
-    loadCodeForDisplay('py', 'games/number-guess/guess-the-number.py');
+    // Make sure your folder structure is: guess-the-number.js
+    loadCodeForDisplay('js', 'guess-the-number.js');
+    loadCodeForDisplay('py', 'guess-the-number.py');
 });
 
 // Function to fetch code from a file and put it in the correct <pre> tag

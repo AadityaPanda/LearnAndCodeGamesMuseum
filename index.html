@@ -3,62 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Number Guessing Game | Code & Play</title>
-    <!-- Prism.js CSS (Okaidia Theme for dark code blocks) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
-    <!-- Your Custom Stylesheet -->
+    <title>CodePlayground | Learn Programming Through Games</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header>
-        <h1>Number Guessing Game</h1>
-        <p>Play the game, then see how it was built in different languages.</p>
+        <h1>🎮 CodePlayground</h1>
+        <p>Learn programming by building and playing games</p>
     </header>
 
     <main>
-        <!-- Section 1: The Playable Game -->
-        <section class="game-section">
-            <h2>🎮 Play the Game</h2>
-            <div id="game-container">
-                <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
-                <button id="startGameBtn" style="padding: 12px 24px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px 0;">Start Game</button>
-                <!-- This div will show the complete game interface and feedback -->
-                <div id="gameFeedback" style="margin-top: 20px; min-height: 100px; border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; background-color: #f8f9fa;"></div>
-            </div>
-        </section>
-
-        <!-- Section 2: The Code and Explanations -->
-        <section class="code-section">
-            <h2>💻 Learn the Code</h2>
-            <p style="margin-bottom: 20px; color: #666;">See how this game was built with dynamic proximity messages and smart user interface design.</p>
-            <div class="code-container">
-                <!-- Tabs to switch languages -->
-                <div class="code-tabs">
-                    <button class="tab-button active" data-lang="js">JavaScript</button>
-                    <button class="tab-button" data-lang="py">Python</button>
-                </div>
-                
-                <!-- Code display area: These are now EMPTY placeholders -->
-                <div class="code-view">
-                    <!-- JavaScript Code Block: Will be filled by script.js -->
-                    <pre id="code-js" class="code-block active"><code class="language-javascript">// Loading JavaScript code...</code></pre>
-
-                    <!-- Python Code Block: Will be filled by script.js -->
-                    <pre id="code-py" class="code-block"><code class="language-python"># Loading Python code...</code></pre>
-                </div>
+        <section class="games-gallery">
+            <h2>Choose Your Game</h2>
+            <div class="game-grid">
+                <!-- A placeholder for now. JS will build the cards here. -->
+                <p>Loading games...</p>
             </div>
         </section>
     </main>
 
-    <!--
-      All the page logic (tabs, buttons, game logic) is handled by script.js.
-      The 'defer' attribute ensures the script runs after the HTML is ready.
-    -->
-    <script src="js/script.js" defer></script>
-    
-    <!-- Prism.js Core JS for Syntax Highlighting -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
+    <!-- This will be our new script for populating the gallery -->
+    <script src="js/main.js"></script> 
 </body>
 </html>

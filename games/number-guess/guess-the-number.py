@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Guess the Number Game - Python Version
 A simple number guessing game where the computer thinks of a number
