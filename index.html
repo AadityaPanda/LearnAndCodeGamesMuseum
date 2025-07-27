@@ -37,11 +37,266 @@
                 
                 <!-- Code display area -->
                 <div class="code-view">
-                    <pre id="code-js" class="code-block active"><code>
+                    <pre id="code-js" class="code-block active"><code class="language-javascript">
 <!-- PASTE YOUR JAVASCRIPT CODE HERE -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .stats {
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Guess the Number Game</h1>
+        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+        <button onclick="startGame()">Start New Game</button>
+        <div id="gameInfo" class="stats"></div>
+    </div>
+
+    <script>
+        // Global variables to track game state
+        let secretNumber; // The number the computer is thinking of
+        let attempts; // How many guesses the player has made
+        let gameActive; // Whether a game is currently in progress
+
+        // Function to start a new game
+        function startGame() {
+            // Generate a random number between 1 and 100 (inclusive)
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            
+            // Reset the attempt counter
+            attempts = 0;
+            
+            // Set game as active
+            gameActive = true;
+            
+            // Update the display to show game has started
+            document.getElementById('gameInfo').innerHTML = '<p>Game started! Make your first guess.</p>';
+            
+            // Start the guessing loop
+            playGame();
+        }
+
+        // Main game loop function
+        function playGame() {
+            // Continue asking for guesses while the game is active
+            while (gameActive) {
+                // Get the user's guess using prompt dialog
+                let userGuess = prompt(`Enter your guess (1-100):\nAttempts so far: ${attempts}`);
+                
+                // Check if user clicked Cancel or pressed Escape
+                if (userGuess === null) {
+                    alert("Game cancelled. Click 'Start New Game' to play again!");
+                    gameActive = false;
+                    document.getElementById('gameInfo').innerHTML = '<p>Game cancelled. Ready for a new game?</p>';
+                    break;
+                }
+                
+                // Convert the user's input to a number
+                userGuess = parseInt(userGuess);
+                
+                // Validate the input - check if it's a valid number
+                if (isNaN(userGuess)) {
+                    alert("Please enter a valid number!");
+                    continue; // Ask for input again
+                }
+                
+                // Check if the number is within the valid range (1-100)
+                if (userGuess < 1 || userGuess > 100) {
+                    alert("Please enter a number between 1 and 100!");
+                    continue; // Ask for input again
+                }
+                
+                // Increment the attempt counter
+                attempts++;
+                
+                // Check if the guess is correct
+                if (userGuess === secretNumber) {
+                    // Player guessed correctly! End the game with celebration
+                    alert(`🎉 Congratulations! You guessed it!\n\nThe number was ${secretNumber}\nYou got it in ${attempts} attempts!`);
+                    gameActive = false;
+                    
+                    // Update the display with final stats
+                    document.getElementById('gameInfo').innerHTML = 
+                        `<p><strong>🎉 You won!</strong><br>
+                         The number was: ${secretNumber}<br>
+                         Total attempts: ${attempts}</p>`;
+                    
+                } else if (userGuess < secretNumber) {
+                    // Guess is too low - give hint to go higher
+                    alert(`Too low! Try a higher number.\nAttempts: ${attempts}`);
+                    
+                } else {
+                    // Guess is too high - give hint to go lower
+                    alert(`Too high! Try a lower number.\nAttempts: ${attempts}`);
+                }
+            }
+        }
+
+        // Display initial instructions when page loads
+        document.getElementById('gameInfo').innerHTML = '<p>Click the button above to start playing!</p>';
+    </script>
+</body>
+</html>
                     </code></pre>
-                    <pre id="code-py" class="code-block"><code>
+                    <pre id="code-py" class="code-block"><code class="language-python">
 <!-- PASTE YOUR PYTHON CODE HERE -->
+ #!/usr/bin/env python3
+"""
+Guess the Number Game - Python Version
+A simple number guessing game where the computer thinks of a number
+between 1 and 100, and the player tries to guess it.
+"""
+
+import random  # Import random module to generate random numbers
+
+def start_game():
+    """
+    Main function to start and run a new guessing game.
+    This function handles the entire game flow from start to finish.
+    """
+    
+    # Generate a random number between 1 and 100 (inclusive)
+    secret_number = random.randint(1, 100)
+    
+    # Initialize the attempt counter
+    attempts = 0
+    
+    # Set game as active (will continue until player guesses correctly)
+    game_active = True
+    
+    # Welcome message and game instructions
+    print("🎯 Welcome to the Guess the Number Game!")
+    print("I'm thinking of a number between 1 and 100.")
+    print("Can you guess what it is?")
+    print("-" * 40)  # Print a separator line for better readability
+    
+    # Main game loop - continues until the player guesses correctly
+    while game_active:
+        try:
+            # Get the user's guess using input() function
+            user_input = input(f"\nEnter your guess (1-100) [Attempts: {attempts}]: ")
+            
+            # Convert the user's input string to an integer
+            user_guess = int(user_input)
+            
+            # Validate the input - check if it's within the valid range (1-100)
+            if user_guess < 1 or user_guess > 100:
+                print("⚠️  Please enter a number between 1 and 100!")
+                continue  # Skip the rest of the loop and ask for input again
+            
+            # Increment the attempt counter since we have a valid guess
+            attempts += 1
+            
+            # Check if the guess is correct
+            if user_guess == secret_number:
+                # Player guessed correctly! Celebrate and end the game
+                print("\n" + "=" * 50)
+                print("🎉 CONGRATULATIONS! YOU GUESSED IT! 🎉")
+                print(f"The number was: {secret_number}")
+                print(f"You got it in {attempts} attempts!")
+                print("=" * 50)
+                
+                # Set game_active to False to exit the while loop
+                game_active = False
+                
+            elif user_guess < secret_number:
+                # Guess is too low - give hint to go higher
+                print(f"📈 Too low! Try a higher number. (Attempts: {attempts})")
+                
+            else:  # user_guess > secret_number
+                # Guess is too high - give hint to go lower
+                print(f"📉 Too high! Try a lower number. (Attempts: {attempts})")
+                
+        except ValueError:
+            # Handle the case where user enters something that's not a number
+            print("❌ Invalid input! Please enter a valid number.")
+            # Note: We don't increment attempts for invalid input
+            continue
+        
+        except KeyboardInterrupt:
+            # Handle the case where user presses Ctrl+C to quit
+            print("\n\n👋 Game cancelled. Thanks for playing!")
+            game_active = False
+            return  # Exit the function early
+
+def play_again():
+    """
+    Function to ask the player if they want to play again.
+    Returns True if they want to play again, False otherwise.
+    """
+    while True:
+        # Ask if the player wants to play another round
+        choice = input("\nWould you like to play again? (y/n): ").lower().strip()
+        
+        if choice in ['y', 'yes']:
+            return True  # Player wants to play again
+        elif choice in ['n', 'no']:
+            return False  # Player doesn't want to play again
+        else:
+            print("Please enter 'y' for yes or 'n' for no.")
+
+def main():
+    """
+    Main function that handles the overall program flow.
+    This allows for multiple games in a row if the player wants.
+    """
+    print("Welcome to the Number Guessing Game!")
+    print("=" * 40)
+    
+    # Keep playing games until the player chooses to quit
+    while True:
+        # Start a new game
+        start_game()
+        
+        # Ask if they want to play again
+        if not play_again():
+            # Player doesn't want to play again, so exit
+            print("\n👋 Thanks for playing! Goodbye!")
+            break
+        else:
+            # Player wants to play again, so continue the loop
+            print("\n" + "🔄 Starting a new game..." + "\n")
+
+# This block ensures the game only runs when the script is executed directly
+# (not when it's imported as a module)
+if __name__ == "__main__":
+    main()
                     </code></pre>
                 </div>
             </div>
