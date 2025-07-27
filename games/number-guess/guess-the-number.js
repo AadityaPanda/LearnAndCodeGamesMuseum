@@ -14,68 +14,158 @@ function startGame() {
     // Set game as active
     gameActive = true;
     
-    // Update the display to show game has started
-    document.getElementById('gameInfo').innerHTML = '<p>Game started! Make your first guess.</p>';
+    // Show the game interface
+    showGameInterface();
     
-    // Start the guessing loop
-    playGame();
+    console.log(`Debug: Secret number is ${secretNumber}`); // Remove this in production
 }
 
-// Main game loop function
-function playGame() {
-    // Continue asking for guesses while the game is active
-    while (gameActive) {
-        // Get the user's guess using prompt dialog
-        let userGuess = prompt(`Enter your guess (1-100):\nAttempts so far: ${attempts}`);
-        
-        // Check if user clicked Cancel or pressed Escape
-        if (userGuess === null) {
-            alert("Game cancelled. Click 'Start New Game' to play again!");
-            gameActive = false;
-            document.getElementById('gameInfo').innerHTML = '<p>Game cancelled. Ready for a new game?</p>';
-            break;
+// Function to display the game interface
+function showGameInterface() {
+    const gameContainer = document.getElementById('gameContainer');
+    gameContainer.innerHTML = `
+        <h1>🎯 Guess the Number Game</h1>
+        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+        <div id="gameStats">Attempts: ${attempts}</div>
+        <div id="feedback"></div>
+        <input type="number" id="guessInput" min="1" max="100" placeholder="Enter your guess (1-100)">
+        <button onclick="makeGuess()">Submit Guess</button>
+        <button onclick="resetGame()">New Game</button>
+    `;
+    
+    // Focus on the input field for better user experience
+    document.getElementById('guessInput').focus();
+    
+    // Allow Enter key to submit guess
+    document.getElementById('guessInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            makeGuess();
         }
-        
-        // Convert the user's input to a number
-        userGuess = parseInt(userGuess);
-        
-        // Validate the input - check if it's a valid number
-        if (isNaN(userGuess)) {
-            alert("Please enter a valid number!");
-            continue; // Ask for input again
-        }
-        
-        // Check if the number is within the valid range (1-100)
-        if (userGuess < 1 || userGuess > 100) {
-            alert("Please enter a number between 1 and 100!");
-            continue; // Ask for input again
-        }
-        
-        // Increment the attempt counter
-        attempts++;
-        
-        // Check if the guess is correct
-        if (userGuess === secretNumber) {
-            // Player guessed correctly! End the game with celebration
-            alert(`🎉 Congratulations! You guessed it!\n\nThe number was ${secretNumber}\nYou got it in ${attempts} attempts!`);
-            gameActive = false;
-            
-            // Update the display with final stats
-            document.getElementById('gameInfo').innerHTML = 
-                `<p><strong>🎉 You won!</strong><br>
-                    The number was: ${secretNumber}<br>
-                    Total attempts: ${attempts}</p>`;
-            
-        } else if (userGuess < secretNumber) {
-            // Guess is too low - give hint to go higher
-            alert(`Too low! Try a higher number.\nAttempts: ${attempts}`);
-            
-        } else {
-            // Guess is too high - give hint to go lower
-            alert(`Too high! Try a lower number.\nAttempts: ${attempts}`);
-        }
+    });
+}
+
+// Function to handle a guess submission
+function makeGuess() {
+    if (!gameActive) return; // Don't process guesses if game is not active
+    
+    const guessInput = document.getElementById('guessInput');
+    const userGuess = parseInt(guessInput.value);
+    
+    // Validate the input
+    if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+        showFeedback("❌ Please enter a valid number between 1 and 100!", "error");
+        return;
+    }
+    
+    // Increment attempts counter
+    attempts++;
+    
+    // Update attempts display
+    document.getElementById('gameStats').textContent = `Attempts: ${attempts}`;
+    
+    // Clear the input field for next guess
+    guessInput.value = '';
+    guessInput.focus();
+    
+    // Check the guess and provide feedback
+    if (userGuess === secretNumber) {
+        // Correct guess - end the game
+        gameActive = false;
+        showVictoryMessage();
+    } else {
+        // Wrong guess - provide dynamic feedback based on how close they are
+        const difference = Math.abs(userGuess - secretNumber);
+        const message = getDynamicMessage(userGuess, secretNumber, difference);
+        showFeedback(message, "hint");
     }
 }
 
-// Display initial instructions when page loads
-document.getElementById('gameInfo').innerHTML = '<p>Click the button above to start playing!</p>';
+// Function to generate dynamic messages based on how close the guess is
+function getDynamicMessage(guess, target, difference) {
+    let proximityMessage;
+    let directionMessage;
+    
+    // Determine direction (higher or lower)
+    if (guess < target) {
+        directionMessage = "📈 Go higher!";
+    } else {
+        directionMessage = "📉 Go lower!";
+    }
+    
+    // Generate proximity message based on how close they are
+    if (difference === 1) {
+        proximityMessage = "🔥 SO CLOSE! You're just 1 away!";
+    } else if (difference <= 3) {
+        proximityMessage = "🔥 Very hot! You're super close!";
+    } else if (difference <= 5) {
+        proximityMessage = "🌡️ Hot! You're getting close!";
+    } else if (difference <= 10) {
+        proximityMessage = "🔸 Warm! You're in the right area!";
+    } else if (difference <= 15) {
+        proximityMessage = "❄️ Cool. You're somewhat close.";
+    } else if (difference <= 25) {
+        proximityMessage = "🧊 Cold. You're getting further away.";
+    } else if (difference <= 35) {
+        proximityMessage = "🥶 Very cold! You're quite far.";
+    } else {
+        proximityMessage = "❄️ Freezing! You're very far away!";
+    }
+    
+    return `${proximityMessage} ${directionMessage}`;
+}
+
+// Function to display feedback messages
+function showFeedback(message, type) {
+    const feedbackDiv = document.getElementById('feedback');
+    feedbackDiv.textContent = message;
+    
+    // Add CSS class based on message type for styling
+    feedbackDiv.className = type;
+}
+
+// Function to show victory message
+function showVictoryMessage() {
+    const feedbackDiv = document.getElementById('feedback');
+    
+    // Create a congratulatory message with attempt-based commentary
+    let attemptMessage;
+    if (attempts === 1) {
+        attemptMessage = "🤯 INCREDIBLE! You got it in just 1 try! Are you psychic?";
+    } else if (attempts <= 3) {
+        attemptMessage = `🏆 AMAZING! You got it in only ${attempts} attempts! You're a natural!`;
+    } else if (attempts <= 6) {
+        attemptMessage = `🎉 GREAT JOB! You got it in ${attempts} attempts! Well done!`;
+    } else if (attempts <= 10) {
+        attemptMessage = `👏 NICE WORK! You got it in ${attempts} attempts! Good guessing!`;
+    } else {
+        attemptMessage = `🎯 CONGRATULATIONS! You got it in ${attempts} attempts! Persistence pays off!`;
+    }
+    
+    feedbackDiv.innerHTML = `
+        <div style="color: #28a745; font-weight: bold; font-size: 1.2em;">
+            ${attemptMessage}<br>
+            The number was: ${secretNumber}
+        </div>
+    `;
+    
+    // Disable the input field
+    document.getElementById('guessInput').disabled = true;
+}
+
+// Function to reset and start a new game
+function resetGame() {
+    startGame();
+}
+
+// Function to initialize the game when page loads
+function initGame() {
+    const gameContainer = document.getElementById('gameContainer');
+    gameContainer.innerHTML = `
+        <h1>🎯 Guess the Number Game</h1>
+        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+        <button onclick="startGame()">Start New Game</button>
+    `;
+}
+
+// Initialize the game when the page loads
+document.addEventListener('DOMContentLoaded', initGame);

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Guess the Number Game - Python Version
 A simple number guessing game where the computer thinks of a number
@@ -5,6 +6,65 @@ between 1 and 100, and the player tries to guess it.
 """
 
 import random  # Import random module to generate random numbers
+
+def get_dynamic_message(guess, target, difference):
+    """
+    Generate dynamic messages based on how close the guess is to the target.
+    
+    Args:
+        guess (int): The user's guess
+        target (int): The secret number
+        difference (int): Absolute difference between guess and target
+    
+    Returns:
+        str: A message indicating proximity and direction
+    """
+    # Determine direction (higher or lower)
+    if guess < target:
+        direction_message = "📈 Go higher!"
+    else:
+        direction_message = "📉 Go lower!"
+    
+    # Generate proximity message based on how close they are
+    if difference == 1:
+        proximity_message = "🔥 SO CLOSE! You're just 1 away!"
+    elif difference <= 3:
+        proximity_message = "🔥 Very hot! You're super close!"
+    elif difference <= 5:
+        proximity_message = "🌡️ Hot! You're getting close!"
+    elif difference <= 10:
+        proximity_message = "🔸 Warm! You're in the right area!"
+    elif difference <= 15:
+        proximity_message = "❄️ Cool. You're somewhat close."
+    elif difference <= 25:
+        proximity_message = "🧊 Cold. You're getting further away."
+    elif difference <= 35:
+        proximity_message = "🥶 Very cold! You're quite far."
+    else:
+        proximity_message = "❄️ Freezing! You're very far away!"
+    
+    return f"{proximity_message} {direction_message}"
+
+def get_victory_message(attempts):
+    """
+    Generate a victory message based on the number of attempts.
+    
+    Args:
+        attempts (int): Number of attempts it took to guess correctly
+    
+    Returns:
+        str: A congratulatory message tailored to performance
+    """
+    if attempts == 1:
+        return "🤯 INCREDIBLE! You got it in just 1 try! Are you psychic?"
+    elif attempts <= 3:
+        return f"🏆 AMAZING! You got it in only {attempts} attempts! You're a natural!"
+    elif attempts <= 6:
+        return f"🎉 GREAT JOB! You got it in {attempts} attempts! Well done!"
+    elif attempts <= 10:
+        return f"👏 NICE WORK! You got it in {attempts} attempts! Good guessing!"
+    else:
+        return f"🎯 CONGRATULATIONS! You got it in {attempts} attempts! Persistence pays off!"
 
 def start_game():
     """
@@ -47,22 +107,21 @@ def start_game():
             # Check if the guess is correct
             if user_guess == secret_number:
                 # Player guessed correctly! Celebrate and end the game
+                victory_message = get_victory_message(attempts)
                 print("\n" + "=" * 50)
                 print("🎉 CONGRATULATIONS! YOU GUESSED IT! 🎉")
+                print(victory_message)
                 print(f"The number was: {secret_number}")
-                print(f"You got it in {attempts} attempts!")
                 print("=" * 50)
                 
                 # Set game_active to False to exit the while loop
                 game_active = False
                 
-            elif user_guess < secret_number:
-                # Guess is too low - give hint to go higher
-                print(f"📈 Too low! Try a higher number. (Attempts: {attempts})")
-                
-            else:  # user_guess > secret_number
-                # Guess is too high - give hint to go lower
-                print(f"📉 Too high! Try a lower number. (Attempts: {attempts})")
+            else:
+                # Wrong guess - provide dynamic feedback based on how close they are
+                difference = abs(user_guess - secret_number)
+                message = get_dynamic_message(user_guess, secret_number, difference)
+                print(f"{message} (Attempts: {attempts})")
                 
         except ValueError:
             # Handle the case where user enters something that's not a number
