@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game | Code & Play</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Number Guessing Game</h1>
+        <p>Play the game, then see how it was built in different languages.</p>
+    </header>
+
+    <main>
+        <!-- Section 1: The Playable Game -->
+        <section class="game-section">
+            <h2>Play the Game</h2>
+            <div id="game-container">
+                <p>Guess a number between 1 and 100</p>
+                <!-- Your existing game UI (input fields, buttons) can be adapted to go here. -->
+                <!-- Or, if you used prompt(), you just need a button to start it. -->
+                <button id="startGameBtn">Start Game</button>
+            </div>
+        </section>
+
+        <!-- Section 2: The Code and Explanations -->
+        <section class="code-section">
+            <h2>Learn the Code</h2>
+            <div class="code-container">
+                <!-- Tabs to switch languages -->
+                <div class="code-tabs">
+                    <button class="tab-button active" data-lang="js">JavaScript</button>
+                    <button class="tab-button" data-lang="py">Python</button>
+                </div>
+                
+                <!-- Code display area -->
+                <div class="code-view">
+                    <pre id="code-js" class="code-block active"><code>
+<!-- PASTE YOUR JAVASCRIPT CODE HERE -->
+                    </code></pre>
+                    <pre id="code-py" class="code-block"><code>
+<!-- PASTE YOUR PYTHON CODE HERE -->
+                    </code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Link your game logic and the new tab logic -->
+    <script src="js/guess-the-number.js"></script>
+    <script>
+        // Simple logic for the tabs
+        const tabs = document.querySelectorAll('.tab-button');
+        const codeBlocks = document.querySelectorAll('.code-block');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Deactivate all
+                tabs.forEach(t => t.classList.remove('active'));
+                codeBlocks.forEach(b => b.classList.remove('active'));
+
+                // Activate clicked
+                tab.classList.add('active');
+                document.getElementById(`code-${tab.dataset.lang}`).classList.add('active');
+            });
+        });
+
+        // If your game doesn't start automatically, this button can trigger it
+        document.getElementById('startGameBtn').addEventListener('click', () => {
+            // Call the main function from your guess-the-number.js file
+            // For example: startGame(); 
+            alert("The game logic is in guess-the-number.js. Hook up your main game function here!");
+        });
+    </script>
+</body>
+</html>
