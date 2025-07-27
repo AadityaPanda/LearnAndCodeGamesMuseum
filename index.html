@@ -38,158 +38,28 @@
                     <button class="tab-button" data-lang="py">Python</button>
                 </div>
                 
-                <!-- Code display area -->
+                <!-- Code display area: These are now EMPTY placeholders -->
                 <div class="code-view">
-                    <!-- JavaScript Code Block -->
-                    <pre id="code-js" class="code-block active"><code class="language-javascript">
-// Global variables to track game state
-let secretNumber;
-let attempts;
-let gameActive;
+                    <!-- JavaScript Code Block: Will be filled by script.js -->
+                    <pre id="code-js" class="code-block active"><code class="language-javascript">// Loading JavaScript code...</code></pre>
 
-// Function to start a new game
-function startGame() {
-    // Generate a random number between 1 and 100
-    secretNumber = Math.floor(Math.random() * 100) + 1;
-    attempts = 0;
-    gameActive = true;
-    
-    // Update the display to show game has started
-    document.getElementById('gameFeedback').innerHTML = 'Game started! I\'m thinking of a number...';
-    
-    // Start the guessing loop
-    playGame();
-}
-
-// Main game loop function
-function playGame() {
-    // Continue asking for guesses while the game is active
-    while (gameActive) {
-        let userGuess = prompt(`Enter your guess (1-100):\nAttempts so far: ${attempts}`);
-        
-        // Check if user clicked Cancel or pressed Escape
-        if (userGuess === null) {
-            alert("Game cancelled. Click 'Start Game' to play again!");
-            gameActive = false;
-            document.getElementById('gameFeedback').innerHTML = 'Game cancelled.';
-            break;
-        }
-        
-        // Convert input to a number
-        userGuess = parseInt(userGuess);
-        
-        // Validate the input
-        if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
-            alert("Please enter a valid number between 1 and 100!");
-            continue; // Ask for input again
-        }
-        
-        attempts++;
-        
-        // Check if the guess is correct
-        if (userGuess === secretNumber) {
-            alert(`🎉 Congratulations! You guessed it!\n\nThe number was ${secretNumber}.\nYou got it in ${attempts} attempts!`);
-            gameActive = false;
-            document.getElementById('gameFeedback').innerHTML = `<strong>🎉 You won!</strong> The number was ${secretNumber} (${attempts} attempts).`;
-        } else if (userGuess < secretNumber) {
-            alert(`Too low! Try a higher number.`);
-        } else {
-            alert(`Too high! Try a lower number.`);
-        }
-    }
-}
-                    </code></pre>
-
-                    <!-- Python Code Block -->
-                    <pre id="code-py" class="code-block"><code class="language-python">
-import random # Import random module to generate random numbers
-
-def start_game():
-    """
-    Main function to start and run a new guessing game.
-    """
-    secret_number = random.randint(1, 100)
-    attempts = 0
-    game_active = True
-    
-    print("🎯 Welcome to the Guess the Number Game!")
-    print("I'm thinking of a number between 1 and 100.")
-    print("-" * 40)
-    
-    while game_active:
-        try:
-            user_input = input(f"Enter your guess [Attempts: {attempts}]: ")
-            user_guess = int(user_input)
-            
-            if user_guess < 1 or user_guess > 100:
-                print("⚠️  Please enter a number between 1 and 100!")
-                continue
-            
-            attempts += 1
-            
-            if user_guess == secret_number:
-                print(f"🎉 CONGRATULATIONS! You got it in {attempts} attempts!")
-                game_active = False
-            elif user_guess < secret_number:
-                print(f"📈 Too low! Try a higher number.")
-            else: # user_guess > secret_number
-                print(f"📉 Too high! Try a lower number.")
-                
-        except ValueError:
-            print("❌ Invalid input! Please enter a valid number.")
-        except KeyboardInterrupt:
-            print("\n👋 Game cancelled.")
-            return
-
-def play_again():
-    """
-    Asks the player if they want to play another round.
-    """
-    choice = input("\nWould you like to play again? (y/n): ").lower().strip()
-    return choice in ['y', 'yes']
-
-# This block ensures the game only runs when the script is executed directly
-if __name__ == "__main__":
-    while True:
-        start_game()
-        if not play_again():
-            print("Thanks for playing! Goodbye!")
-            break
-        print("\n🔄 Starting a new game...\n")
-                    </code></pre>
+                    <!-- Python Code Block: Will be filled by script.js -->
+                    <pre id="code-py" class="code-block"><code class="language-python"># Loading Python code...</code></pre>
                 </div>
             </div>
         </section>
     </main>
 
+    <!--
+      KEY CHANGE:
+      All the page logic (tabs, buttons, game logic) has been moved out of this file.
+      We now load one single file that handles everything. The 'defer' attribute
+      ensures the script runs after the HTML is ready.
+    -->
+    <script src="js/script.js" defer></script>
+    
     <!-- Prism.js Core JS for Syntax Highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    
-    <!-- All page interactivity logic is here -->
-    <script>
-        /* ================================================================= */
-        /*  PAGE INTERACTIVITY LOGIC (Tabs and Buttons)                      */
-        /* ================================================================= */
 
-        // --- Logic for switching between code tabs ---
-        const tabs = document.querySelectorAll('.tab-button');
-        const codeBlocks = document.querySelectorAll('.code-block');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Deactivate all tabs and code blocks first
-                tabs.forEach(t => t.classList.remove('active'));
-                codeBlocks.forEach(b => b.classList.remove('active'));
-
-                // Activate the one that was clicked
-                tab.classList.add('active');
-                document.getElementById(`code-${tab.dataset.lang}`).classList.add('active');
-            });
-        });
-
-        // --- Logic to connect the "Start Game" button to the game function ---
-        document.getElementById('startGameBtn').addEventListener('click', startGame);
-
-    </script>
 </body>
 </html>
